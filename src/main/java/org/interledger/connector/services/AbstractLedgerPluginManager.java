@@ -27,8 +27,8 @@ public abstract class AbstractLedgerPluginManager implements LedgerPluginManager
   private final Map<InterledgerAddress, LedgerPlugin> ledgerPluginMap;
 
   public AbstractLedgerPluginManager(
-      final SubprotocolDataService subprotocolDataService,
-      final TransferCorrelationRepository transferCorrelationRepository
+    final SubprotocolDataService subprotocolDataService,
+    final TransferCorrelationRepository transferCorrelationRepository
   ) {
     this.subprotocolDataService = Objects.requireNonNull(subprotocolDataService);
     this.transferCorrelationRepository = Objects.requireNonNull(transferCorrelationRepository);
@@ -37,7 +37,7 @@ public abstract class AbstractLedgerPluginManager implements LedgerPluginManager
 
   @Override
   public void addLedgerPlugin(
-      final LedgerPluginConfig ledgerPluginConfig, final LedgerPlugin ledgerPlugin
+    final LedgerPluginConfig ledgerPluginConfig, final LedgerPlugin ledgerPlugin
   ) {
     Objects.requireNonNull(ledgerPluginConfig);
     Objects.requireNonNull(ledgerPlugin);
@@ -57,10 +57,10 @@ public abstract class AbstractLedgerPluginManager implements LedgerPluginManager
       logger.error("LedgerPlugin failed to connect. Error: {}", e.getMessage(), e);
       // emit an error to the ledger plugin...
       ledgerPlugin.getLedgerPluginEventEmitter().emitEvent(
-          ImmutableLedgerPluginErrorEvent.builder()
-              .ledgerPrefix(ledgerPluginConfig.getLedgerPrefix())
-              .error(e)
-              .build()
+        ImmutableLedgerPluginErrorEvent.builder()
+          .ledgerPrefix(ledgerPluginConfig.getLedgerPrefix())
+          .error(e)
+          .build()
       );
     }
   }
@@ -71,7 +71,7 @@ public abstract class AbstractLedgerPluginManager implements LedgerPluginManager
 
     // Disconnect from the Ledger via the associated LedgerPlugin.
     Optional.ofNullable(this.ledgerPluginMap.remove(ledgerPrefix))
-        .ifPresent(LedgerPlugin::disconnect);
+      .ifPresent(LedgerPlugin::disconnect);
   }
 
   @Override

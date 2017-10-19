@@ -9,8 +9,7 @@
  * Note that this sub-protocol is not appropriate for every use-case, but is instead only appropriate for ledgers that
  *
  *
- * For example, if a connector wanted to take a
- * source-transfer and determine if an existing destination transfer had already been created, then this sub-protocol
- * would not be desirable.
+ * For example, if a connector wanted to take a source-transfer and determine if an existing destination transfer had
+ * already been created, then this sub-protocol would not be desirable.
  */
 package org.interledger.connector.subprotocols.transfer_correlator;

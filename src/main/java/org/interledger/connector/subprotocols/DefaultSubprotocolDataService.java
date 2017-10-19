@@ -26,10 +26,10 @@ public class DefaultSubprotocolDataService implements SubprotocolDataService {
     Objects.requireNonNull(interledgerPayment);
 
     return ImmutableSubprotocolData.builder()
-        .protocolName(SubprotocolConstants.ILP_V1)
-        .data(interledgerCodedContext.write(interledgerPayment))
-        .dataContentType("application/json")
-        .build();
+      .protocolName(SubprotocolConstants.ILP_V1)
+      .data(interledgerCodedContext.write(interledgerPayment))
+      .dataContentType("application/json")
+      .build();
   }
 
   @Override

@@ -9,8 +9,8 @@ import java.time.Instant;
 import javax.money.convert.ExchangeRate;
 
 /**
- * Defines an Interledger payment quote that can be used to assemble a "next-hop" transfer on a
- * destination ledger, in response to an incoming transfer on a different ledger.
+ * Defines an Interledger payment quote that can be used to assemble a "next-hop" transfer on a destination ledger, in
+ * response to an incoming transfer on a different ledger.
  */
 public interface Quote {
 
@@ -30,8 +30,7 @@ public interface Quote {
   ExchangeRate getExchangeRate();
 
   /**
-   * The amount to be delivered to the next-hop ledger, in local-ledger units of that destination
-   * ledger.
+   * The amount to be delivered to the next-hop ledger, in local-ledger units of that destination ledger.
    *
    * @deprecated // TODO: This interface assumes a fixed quote amount regardless of transfer amount.
    */

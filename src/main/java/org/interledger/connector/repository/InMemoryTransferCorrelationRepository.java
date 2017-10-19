@@ -9,8 +9,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * An implementation of {@link TransferCorrelationRepository} that stores correlations in-memory in
- * a non-durable fashion.
+ * An implementation of {@link TransferCorrelationRepository} that stores correlations in-memory in a non-durable
+ * fashion.
  *
  * This implementation is meant for light-weight Connectors or for demonstration/testing purposes.
  */
@@ -25,12 +25,12 @@ public class InMemoryTransferCorrelationRepository implements TransferCorrelatio
   @Override
   public void save(TransferCorrelation transferCorrelation) {
     this.correlatedTransfer
-        .put(transferCorrelation.getDestinationTransferId(), transferCorrelation);
+      .put(transferCorrelation.getDestinationTransferId(), transferCorrelation);
   }
 
   @Override
   public Optional<TransferCorrelation> findByDestinationTransferId(
-      final TransferId destinationTransferId
+    final TransferId destinationTransferId
   ) {
     Objects.requireNonNull(destinationTransferId);
     return Optional.ofNullable(correlatedTransfer.get(destinationTransferId));

@@ -7,8 +7,8 @@ import org.immutables.value.Value;
 import org.immutables.value.Value.Default;
 
 /**
- * A "route" for purposes of Interledger payments. This design is very simple for current
- * functionality, and currently models a table that knows about all and looks like this:
+ * A "route" for purposes of Interledger payments. This design is very simple for current functionality, and currently
+ * models a table that knows about all and looks like this:
  *
  * <pre>
  * ┌──────────────────────────┐│┌────────────────────────┐│┌────────┐
@@ -22,8 +22,8 @@ import org.immutables.value.Value.Default;
  * └──────────────────────────┘│└────────────────────────┘│└────────┘
  * </pre>
  *
- * Eventually, this class needs to be refined so that it can properly model an appropriate route,
- * likely taking into account things like LiquidityCurve and Fees (i.e., a cost function).
+ * Eventually, this class needs to be refined so that it can properly model an appropriate route, likely taking into
+ * account things like LiquidityCurve and Fees (i.e., a cost function).
  *
  * @see "https://github.com/interledgerjs/five-bells-shared/blob/v22.0.1/schemas/Routes.json"
  * @deprecated This interface will likely be replaced with a variant from java-ilp-core.
@@ -56,8 +56,8 @@ public interface InterledgerRoute {
   InterledgerAddress getDestinationLedgerPrefix();
 
   /**
-   * The ledger-prefix of the next-hop ledger that a payment should be forwarded to in order to
-   * complete an Interledger payment.
+   * The ledger-prefix of the next-hop ledger that a payment should be forwarded to in order to complete an Interledger
+   * payment.
    */
   InterledgerAddress getNextHopLedgerPrefix();
 
@@ -83,8 +83,8 @@ public interface InterledgerRoute {
   //InterledgerAddress getConnectorAddress();
 
   /**
-   * Determines if this route is "local", meaning the route's target is connected to this connector
-   * (i.e., the connector holding the routing table).
+   * Determines if this route is "local", meaning the route's target is connected to this connector (i.e., the connector
+   * holding the routing table).
    */
   @Default
   default boolean isLocal() {

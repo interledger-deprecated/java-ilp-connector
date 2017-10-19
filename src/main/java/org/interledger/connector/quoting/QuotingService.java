@@ -1,8 +1,9 @@
 package org.interledger.connector.quoting;
 
-import java.math.BigInteger;
 import org.interledger.InterledgerAddress;
 import org.interledger.connector.routing.InterledgerHop;
+
+import java.math.BigInteger;
 
 /**
  * A service for determining FX quotes for particular liquidity paths.
@@ -11,22 +12,19 @@ import org.interledger.connector.routing.InterledgerHop;
  */
 public interface QuotingService {
 
-    /**
-     * Gets a quote to deliver the specified {@code sourceAmount} to a destination ledger via Interledger.
-     *
-     * A
-     *
-     * @param sourceLedgerPrefix
-     * @param sourceAmount
-     */
-    Quote getQuoteBySourceAmount(InterledgerAddress sourceLedgerPrefix, BigInteger sourceAmount);
+  /**
+   * Gets a quote to deliver the specified {@code sourceAmount} to a destination ledger via Interledger.
+   *
+   * A
+   */
+  Quote getQuoteBySourceAmount(InterledgerAddress sourceLedgerPrefix, BigInteger sourceAmount);
 
-    //findBestPathForSourceAmount(sourceLedger, ilpPacket.account, sourceTransfer.amount)
+  //findBestPathForSourceAmount(sourceLedger, ilpPacket.account, sourceTransfer.amount)
 
-    /**
-     *
-     * @return
-     */
-    InterledgerHop findNextHop();
+  /**
+   *
+   * @return
+   */
+  InterledgerHop findNextHop();
 
 }

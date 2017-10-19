@@ -8,8 +8,8 @@ import java.util.Objects;
 import java.util.Optional;
 
 /**
- * A service for interacting with SubProtocol data, including extraction and insertion of custom
- * subprotocol data from various ledger and connector communications payloads.
+ * A service for interacting with SubProtocol data, including extraction and insertion of custom subprotocol data from
+ * various ledger and connector communications payloads.
  *
  * @deprecated TODO: Move to java-ilp-core
  */
@@ -37,21 +37,20 @@ public interface SubprotocolDataService {
   /**
    * Extract an Interledger payment packet from a list of sub-protocol data objects.
    *
-   * @param subprotocolDataList A {@link List} of type {@link SubprotocolData} that contains
-   *                            optionally-present {@link InterledgerPayment} as on of the
-   *                            protocol-data entries.
+   * @param subprotocolDataList A {@link List} of type {@link SubprotocolData} that contains optionally-present {@link
+   *                            InterledgerPayment} as on of the protocol-data entries.
    *
    * @return The optionally-present {@link InterledgerPayment}, or {@link Optional#empty()} .
    */
   default Optional<InterledgerPayment> findInterledgerPayment(
-      final List<SubprotocolData> subprotocolDataList) {
+    final List<SubprotocolData> subprotocolDataList) {
     Objects.requireNonNull(subprotocolDataList);
 
     return subprotocolDataList.stream()
-        .filter(pr -> pr.getProtocolName().equalsIgnoreCase(SubprotocolConstants.ILP_V1))
-        // Convert to an InterledgerPayment...
-        .map(this::toInterledgerPayment)
-        .findFirst();
+      .filter(pr -> pr.getProtocolName().equalsIgnoreCase(SubprotocolConstants.ILP_V1))
+      // Convert to an InterledgerPayment...
+      .map(this::toInterledgerPayment)
+      .findFirst();
   }
 
 //  /**

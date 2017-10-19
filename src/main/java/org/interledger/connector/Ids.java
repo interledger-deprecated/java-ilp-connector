@@ -12,10 +12,9 @@ import java.util.UUID;
  */
 public class Ids {
 
-
   /**
-   * A wrapper type that defines a "type" of ledger plugin based upon a unique String. For example,
-   * "ilp-mock-plugin" or "btp-plugin".
+   * A wrapper type that defines a "type" of ledger plugin based upon a unique String. For example, "ilp-mock-plugin" or
+   * "btp-plugin".
    */
   @Value.Immutable
   @Wrapped
