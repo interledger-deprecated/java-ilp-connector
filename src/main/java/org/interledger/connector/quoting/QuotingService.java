@@ -19,8 +19,25 @@ public interface QuotingService {
    */
   Quote getQuoteBySourceAmount(InterledgerAddress sourceLedgerPrefix, BigInteger sourceAmount);
 
+  
+  
+  /**
+   * Gets a quote to deliver the specified {@code destinationAmount} to a destination ledger via Interledger
+   *
+   * @param {InterledgerAddress} sourceLedgerPrefix
+   * @param {InterledgerAddress} destinationAmount
+   * @return {Quote}
+   */
+  Quote getQuoteByDestinationAmount(InterledgerAddress sourceLedgerPrefix, BigInteger destinationAmount);
+  
+  //findBestPathForSourceAmount(IlpAddress sourceLedger, IlpAddress destination, BigInteger sourceAmount);
+  
+  
+  
   //findBestPathForSourceAmount(sourceLedger, ilpPacket.account, sourceTransfer.amount)
 
+  
+  
   /**
    *
    * @return
