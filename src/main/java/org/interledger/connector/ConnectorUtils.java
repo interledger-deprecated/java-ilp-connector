@@ -30,7 +30,7 @@ public class ConnectorUtils {
    * @param ledgerPrefix A {@link InterledgerAddress} containing a ledger prefix.
    * @param transferId   A {@link TransferId} that uniquely identifies the transfer.
    *
-   * @returns A deterministically generated {@link UUID}.
+   * @return A deterministically generated {@link UUID}.
    **/
   public static TransferId generateTransferId(
     final String secret, final InterledgerAddress ledgerPrefix, final TransferId transferId

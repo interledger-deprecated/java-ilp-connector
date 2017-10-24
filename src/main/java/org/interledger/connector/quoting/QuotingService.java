@@ -16,6 +16,10 @@ public interface QuotingService {
    * Gets a quote to deliver the specified {@code sourceAmount} to a destination ledger via Interledger.
    *
    * A
+   * 
+   * @param sourceLedgerPrefix - an {@link InterledgerAddress}
+   * @param sourceAmount - a BigInteger
+   * @return {@link Quote}
    */
   Quote getQuoteBySourceAmount(InterledgerAddress sourceLedgerPrefix, BigInteger sourceAmount);
 
@@ -24,9 +28,9 @@ public interface QuotingService {
   /**
    * Gets a quote to deliver the specified {@code destinationAmount} to a destination ledger via Interledger
    *
-   * @param {InterledgerAddress} sourceLedgerPrefix
-   * @param {InterledgerAddress} destinationAmount
-   * @return {Quote}
+   * @param sourceLedgerPrefix - a source {@link InterledgerAddress} 
+   * @param destinationAmount - BigInteger
+   * @return {@link Quote}
    */
   Quote getQuoteByDestinationAmount(InterledgerAddress sourceLedgerPrefix, BigInteger destinationAmount);
   
@@ -40,7 +44,7 @@ public interface QuotingService {
   
   /**
    *
-   * @return
+   * @return {@link InterledgerHop}
    */
   InterledgerHop findNextHop();
 

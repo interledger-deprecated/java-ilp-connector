@@ -42,6 +42,7 @@ public interface Connector<T extends ConnectorConfigurationService> {
   /**
    * Accessor for the {@link LedgerPluginManager} that is used to centralize all interactions with ledger plugins for a
    * given Connector.
+   * @return {@link LedgerPluginManager}
    */
   LedgerPluginManager getLedgerPluginManager();
 

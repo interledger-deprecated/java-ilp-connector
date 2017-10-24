@@ -10,6 +10,7 @@ public interface ConnectorConfig {
    * on.
    *
    * Defaults to 1 second.
+   * @return Integer
    */
   default Integer getMinimumMessageWindow() {
     return 1;

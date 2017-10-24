@@ -16,16 +16,22 @@ public interface Quote {
 
   /**
    * The unique identifier of the liquidity path this quote is valid for.
+   * 
+   * @return {@link RouteId}
    */
   RouteId getRouteId();
 
   /**
    * The next "hop" that this quote exists for.
+   * 
+   * @return {@link InterledgerHop}
    */
   InterledgerHop getNextHop();
 
   /**
    * The exchange-rate applied to this quote.
+   * 
+   * @return {@link ExchangeRate}
    */
   ExchangeRate getExchangeRate();
 
@@ -33,11 +39,15 @@ public interface Quote {
    * The amount to be delivered to the next-hop ledger, in local-ledger units of that destination ledger.
    *
    * @deprecated // TODO: This interface assumes a fixed quote amount regardless of transfer amount.
+   * 
+   * @return BigInteger
    */
   BigInteger getAmount();
 
   /**
    * The date/time when this quote expires.
+   * 
+   * @return Instant
    */
   Instant getExpiresAt();
 

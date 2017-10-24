@@ -52,17 +52,23 @@ public interface InterledgerRoute {
 
   /**
    * The ledger-prefix of the destination ledger for this route.
+   * 
+   * @return {@link InterledgerAddress}
    */
   InterledgerAddress getDestinationLedgerPrefix();
 
   /**
    * The ledger-prefix of the next-hop ledger that a payment should be forwarded to in order to complete an Interledger
    * payment.
+   * 
+   * @return {@link InterledgerAddress}
    */
   InterledgerAddress getNextHopLedgerPrefix();
 
   /**
    * The number of hops that this route will require in order to reach the destination.
+   * 
+   * @return Integer
    **/
   Integer getNumHops();
 
@@ -85,6 +91,8 @@ public interface InterledgerRoute {
   /**
    * Determines if this route is "local", meaning the route's target is connected to this connector (i.e., the connector
    * holding the routing table).
+   * 
+   * @return boolean
    */
   @Default
   default boolean isLocal() {

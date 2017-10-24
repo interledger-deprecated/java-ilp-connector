@@ -14,12 +14,16 @@ public interface InterledgerHop {
 
   /**
    * The ledger prefix of the destination ledger to make the "next" local-ledger transfer in.
+   * 
+   * @return {InterledgerAddress}
    */
   InterledgerAddress getDestinationLedgerPrefix();
 
   /**
    * The ILP address of the account to credit funds to as part of the "next" local-ledger transfer (the source-account
    * will always be the account of the connector at the destination ledger).
+   * 
+   * @return {@link InterledgerAddress}
    */
   InterledgerAddress getDestinationLedgerCreditAccount();
 
@@ -27,6 +31,8 @@ public interface InterledgerHop {
    * The amount of the next-hop transfer.
    *
    * headCurve.amountAt(sourceAmount).toString(),
+   * 
+   * @return BigInteger
    */
   BigInteger getDestinationAmount();
 
@@ -34,6 +40,8 @@ public interface InterledgerHop {
    * The actual final amount of this transfer, once slippage is considered.
    *
    * quote.liquidityCurve.amountAt(sourceAmount).toString()
+   * 
+   * @return BigInteger
    */
   BigInteger getFinalAmount();
 
@@ -45,6 +53,8 @@ public interface InterledgerHop {
    * @return {@code true} if this hop is the final hop; {@code false} if this hop is an intermediate hop.
    *
    * @see "https://github.com/interledger/rfcs/issues/77"
+   * 
+   * @return boolean
    */
   boolean isFinal();
 
