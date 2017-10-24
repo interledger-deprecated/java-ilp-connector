@@ -14,6 +14,7 @@ public interface ConnectorConfigurationService<T extends ConnectorConfig> {
 
   /**
    * Accessor for Connector-wide configuration values.
+   * @return Generic Type T of {@link ConnectorConfig}
    */
   T getConnectorConfig();
 

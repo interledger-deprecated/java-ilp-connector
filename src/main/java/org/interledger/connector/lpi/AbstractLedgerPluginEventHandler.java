@@ -155,6 +155,9 @@ public abstract class AbstractLedgerPluginEventHandler implements LedgerPluginEv
   /**
    * Given a source transfer and information about the "next hop" in an Interledger payment chain, construct a new
    * {@link Transfer} that can be used to complete this Interledger payment.
+   * @param sourceTransfer - a {@link Transfer}
+   * @param nextHop - an {@link InterledgerHop}
+   * @return {@link Transfer}
    */
   protected Transfer buildNextHopTransfer(
     final Transfer sourceTransfer, final InterledgerHop nextHop
@@ -407,6 +410,10 @@ public abstract class AbstractLedgerPluginEventHandler implements LedgerPluginEv
    *
    * If the destination transfer cannot be prepared, for whatever reason, then reject the incoming source transfer with
    * an appropriate ILP error code.
+   * 
+   * @param sourceTransfer - a source {@link Transfer}
+   * @param destinationTransfer - a destination {@link Transfer}
+   * 
    */
   @VisibleForTesting
   protected void prepareDestinationTransfer(final Transfer sourceTransfer,
@@ -445,6 +452,11 @@ public abstract class AbstractLedgerPluginEventHandler implements LedgerPluginEv
   /**
    * Map an instance of {@link LedgerPluginException} to a corresponding {@link InterledgerProtocolError} for sending
    * back to a source ledger.
+   * 
+   * @param triggeringLedgerPrefix - a {@link InterledgerAddress}
+   * @param lpe - a {@link LedgerPluginException}
+   * 
+   * @return {@link InterledgerProtocolError}
    */
   @VisibleForTesting
   protected InterledgerProtocolError fromLedgerPluginException(

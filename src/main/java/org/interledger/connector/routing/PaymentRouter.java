@@ -29,6 +29,8 @@ public interface PaymentRouter {
    *                                (for this Connector) was received on.
    * @param interlederPaymentPacket An {@link InterledgerPayment} containing information about the overall ILP payment.
    * @param sourceTransferAmount    The amount of the incoming source transfer.
+   * 
+   * @return {@link Optional} of type {@link InterledgerHop}
    */
   default Optional<InterledgerHop> determineNexHop(
     InterledgerAddress sourceLedgerPrefix, InterledgerPayment interlederPaymentPacket,
