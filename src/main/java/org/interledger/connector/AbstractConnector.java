@@ -58,7 +58,7 @@ public abstract class AbstractConnector<T extends ConnectorConfigurationService>
             ledgerPlugin.addLedgerPluginEventHandler(this.ledgerPluginEventHandler);
             this.ledgerPluginManager.addLedgerPlugin(ledgerPluginConfig, ledgerPlugin);
           } catch (Exception e) {
-            logger.error("Unable to initialize LedgerPlugin: {}!", ledgerPluginConfig);
+            logger.error("Unable to initialize LedgerPlugin: {}!", ledgerPluginConfig, e);
           }
         }
       );

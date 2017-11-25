@@ -43,6 +43,7 @@ public class AbstractConnectorTest {
   public static final String EXAMPLE_FOO1 = "example.foo1.";
   public static final String EXAMPLE_FOO2 = "example.foo2.";
   public static final String EXAMPLE_EXTENSION_FOO3 = "example.extension.foo3.";
+
   @Mock
   private LedgerPlugin ledgerPluginMock;
 
