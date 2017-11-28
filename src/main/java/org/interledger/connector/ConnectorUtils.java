@@ -17,7 +17,7 @@ public class ConnectorUtils {
 
   /**
    * Using HMAC-SHA-256, deterministically generate a UUID from a secret and a public input, which in this case is a
-   * ledger-prefix and a transferId.
+   * ledger-prefix and a sourceTransferId.
    *
    * This method can be used to generate a deterministic identifier for the "next" transfer that a Connector might make,
    * so that the connector doesn't send duplicate outgoing transfers if it receives duplicate notifications. In the case
@@ -26,21 +26,25 @@ public class ConnectorUtils {
    * payment or make a connector look unreliable. In order to assure this, the connector may use a secret that seeds the
    * deterministic ID generation.
    *
-   * @param secret       A {@link String} containing secret information known only to the creator of this transfer id.
-   * @param ledgerPrefix A {@link InterledgerAddress} containing a ledger prefix.
-   * @param transferId   A {@link TransferId} that uniquely identifies the transfer.
+   * @param secret             A {@link String} containing secret information known only to the creator of this transfer
+   *                           id.
+   * @param sourceLedgerPrefix A {@link InterledgerAddress} containing a ledger prefix for the source ledger that a
+   *                           payment came in from. This is necessary in order to correlate the generated outgoing
+   *                           payment id to an incoming payment+ledger combination.
+   * @param sourceTransferId   A {@link TransferId} that uniquely identifies the source transfer that prompted this
+   *                           identifier generation operation. This is necessary in order to correlate the generated
+   *                           outgoing payment-id to a single incoming payment+ledger combination.
    *
    * @returns A deterministically generated {@link UUID}.
    **/
-  public static TransferId generateTransferId(
-    final String secret, final InterledgerAddress ledgerPrefix, final TransferId transferId
+  public static TransferId generateDeterministicTransferId(
+      final String secret, final InterledgerAddress sourceLedgerPrefix, final TransferId sourceTransferId
   ) {
     Objects.requireNonNull(secret);
-    Objects.requireNonNull(ledgerPrefix);
-    InterledgerAddress.requireLedgerPrefix(ledgerPrefix);
-    Objects.requireNonNull(transferId);
+    InterledgerAddress.requireAddressPrefix(sourceLedgerPrefix);
+    Objects.requireNonNull(sourceTransferId);
 
-    final String publicInput = String.format("%s/%s", ledgerPrefix, transferId);
+    final String publicInput = String.format("%s/%s", sourceLedgerPrefix, sourceTransferId);
 
     try {
       final MessageDigest messageDigest = MessageDigest.getInstance("SHA-256");

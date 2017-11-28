@@ -27,10 +27,10 @@ public class ConnectorUtilsTest {
     final TransferId transferId = TransferId.of(UUID.randomUUID());
 
     final TransferId expectedUUID = ConnectorUtils
-        .generateTransferId(secret, ledgerPrefix, transferId);
+        .generateDeterministicTransferId(secret, ledgerPrefix, transferId);
 
     IntStream.of(1000).forEach(i ->
-        assertThat(ConnectorUtils.generateTransferId(secret, ledgerPrefix, transferId),
+        assertThat(ConnectorUtils.generateDeterministicTransferId(secret, ledgerPrefix, transferId),
             is(expectedUUID))
     );
   }

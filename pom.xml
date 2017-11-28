@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project
-  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
-  xmlns="http://maven.apache.org/POM/4.0.0"
-  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
+    xmlns="http://maven.apache.org/POM/4.0.0"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
 
   <groupId>org.interledger</groupId>
   <artifactId>ilp-connector</artifactId>
-  <version>0.1.0-SNAPSHOT</version>
+  <version>0.3.0-SNAPSHOT</version>
 
   <name>ILP Connector (Java)</name>
   <description>Java implementation of an Interledger Connector.</description>
@@ -40,8 +40,8 @@
     <jackson-annotations.version>2.8.9</jackson-annotations.version>
     <guava.version>21.0</guava.version>
     <immutables.version>2.5.6</immutables.version>
-    <ilp-core.version>0.9.0-SNAPSHOT</ilp-core.version>
-    <ilp-plugin.version>0.1.2-SNAPSHOT</ilp-plugin.version>
+    <ilp-core.version>0.9.2-SNAPSHOT</ilp-core.version>
+    <ilp-plugin.version>0.2.0-SNAPSHOT</ilp-plugin.version>
 
     <maven-checkstyle-plugin.version>2.17</maven-checkstyle-plugin.version>
     <checkstyle.consoleOutput>true</checkstyle.consoleOutput>
@@ -95,6 +95,12 @@
       <artifactId>value</artifactId>
       <version>${immutables.version}</version>
       <scope>provided</scope>
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.commons</groupId>
+      <artifactId>commons-collections4</artifactId>
+      <version>4.1</version>
     </dependency>
 
     <dependency>

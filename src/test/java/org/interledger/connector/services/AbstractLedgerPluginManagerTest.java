@@ -41,8 +41,9 @@ public class AbstractLedgerPluginManagerTest {
   @BeforeMethod
   public void setup() {
     MockitoAnnotations.initMocks(this);
-    this.abstractLedgerPluginManager = new AbstractLedgerPluginManager(subprotocolDataServiceMock,
-        transferCorrelationRepositoryMock) {
+    this.abstractLedgerPluginManager = new AbstractLedgerPluginManager(
+        subprotocolDataServiceMock, transferCorrelationRepositoryMock
+    ) {
     };
   }
 
@@ -238,6 +239,52 @@ public class AbstractLedgerPluginManagerTest {
   public void testGetTransferCorrelationRepository() throws Exception {
     assertThat(this.abstractLedgerPluginManager.getTransferCorrelationRepository(),
         is(transferCorrelationRepositoryMock));
+  }
+
+  ////////////////////////
+  // Test isLocallyPeered
+  ////////////////////////
+
+  @Test(expectedExceptions = NullPointerException.class)
+  public void testIsLocallyPeeredWithNull() throws Exception {
+    try {
+      this.abstractLedgerPluginManager.isLocallyPeered(null);
+      fail("Should have thrown an exception but did not!");
+    } catch (NullPointerException e) {
+      assertThat(e.getMessage(), is("addressPrefix must not be null!"));
+      throw e;
+    }
+  }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testIsLocallyPeeredUsingNonPrefix() throws Exception {
+    try {
+      this.abstractLedgerPluginManager.isLocallyPeered(LEDGER_PREFIX1.with("foo"));
+      fail("Should have thrown an exception but did not!");
+    } catch (NullPointerException e) {
+      assertThat(e.getMessage(), is(nullValue()));
+      throw e;
+    }
+  }
+
+  @Test
+  public void testIsLocallyPeered() throws Exception {
+    {
+      final LedgerPluginConfig ledgerPluginConfigMock = mock(LedgerPluginConfig.class);
+      when(ledgerPluginConfigMock.getLedgerPrefix()).thenReturn(LEDGER_PREFIX1);
+      final LedgerPlugin ledgerPluginMock = mock(LedgerPlugin.class);
+      abstractLedgerPluginManager.addLedgerPlugin(ledgerPluginConfigMock, ledgerPluginMock);
+    }
+    {
+      final LedgerPluginConfig ledgerPluginConfigMock = mock(LedgerPluginConfig.class);
+      when(ledgerPluginConfigMock.getLedgerPrefix()).thenReturn(LEDGER_PREFIX2);
+      final LedgerPlugin ledgerPluginMock = mock(LedgerPlugin.class);
+      abstractLedgerPluginManager.addLedgerPlugin(ledgerPluginConfigMock, ledgerPluginMock);
+    }
+
+    assertThat(this.abstractLedgerPluginManager.isLocallyPeered(LEDGER_PREFIX1), is(true));
+    assertThat(this.abstractLedgerPluginManager.isLocallyPeered(LEDGER_PREFIX2), is(true));
+    assertThat(this.abstractLedgerPluginManager.isLocallyPeered(LEDGER_PREFIX1.with("foo.")), is(false));
   }
 
   ////////////////////////

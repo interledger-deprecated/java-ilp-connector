@@ -46,6 +46,19 @@ public interface LedgerPluginManager {
   Optional<LedgerPlugin> getLedgerPlugin(InterledgerAddress ledgerPrefix);
 
   /**
+   * Determines if {@code ledgerPrefix} is a locally-peered (i.e., locally serviceable) ledger, meaning the ILP node
+   * operating this manager can simply execute a payment directly on the ledger in question.
+   *
+   * @param ledgerPrefix An {@link InterledgerAddress} prefix representing a directly-peered ledger.
+   *
+   * @return {@code true} if {@code ledgerPrefix} is locally servicable, {@code false} otherwise.
+   */
+  default boolean isLocallyPeered(final InterledgerAddress ledgerPrefix) {
+    InterledgerAddress.requireAddressPrefix(ledgerPrefix);
+    return this.getLedgerPlugin(ledgerPrefix).isPresent();
+  }
+
+  /**
    * An accessor method for implementations to return a Ledger Plugin for the specified {@code ledgerPrefix}, assuming
    * that it should be present.
    *
@@ -63,17 +76,16 @@ public interface LedgerPluginManager {
    */
   @Default
   default LedgerPlugin getLedgerPluginSafe(
-    final TransferId transferId, final InterledgerAddress ledgerPrefix
+      final TransferId transferId, final InterledgerAddress ledgerPrefix
   ) {
-    Objects.requireNonNull(ledgerPrefix);
-    InterledgerAddress.requireLedgerPrefix(ledgerPrefix);
+    InterledgerAddress.requireAddressPrefix(ledgerPrefix);
     Objects.requireNonNull(transferId);
 
     return this.getLedgerPlugin(ledgerPrefix).orElseThrow(() -> new RuntimeException(
-      String.format(
-        "For TransferId '%s', LedgerPlugin '%s' was not currently connected to this connector!",
-        transferId, ledgerPrefix
-      )));
+        String.format(
+            "For TransferId '%s', LedgerPlugin '%s' was not currently connected to this connector!",
+            transferId, ledgerPrefix
+        )));
   }
 
   TransferCorrelationRepository getTransferCorrelationRepository();
