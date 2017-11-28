@@ -1,16 +1,21 @@
 package org.interledger.connector.routing;
 
+import java.util.Objects;
 import java.util.Optional;
 
 import org.interledger.InterledgerAddress;
 
 /**
- * An interface that determines a "best" next-hop for a particular Interledger payment based upon implementation-defined
- * metrics. For example, while a given routing table might contain multiple valid routes for a payment to traverse, one
- * implementation of this interface might decide to always choose the "closest" route, whereas another implementation
- * might decide to use the "most reliable" route.
+ * A simple implementation of {@link PaymentRouter} that simply chooses the first route if multiple are returned from
+ * the routing table.
  */
-public interface PaymentRouter<R extends Route> {
+public class SimplePaymentRouter implements PaymentRouter<Route> {
+
+  private final RoutingTable<Route> routingTable;
+
+  public SimplePaymentRouter(final RoutingTable<Route> routingTable) {
+    this.routingTable = Objects.requireNonNull(routingTable);
+  }
 
   /**
    * Given an incoming transfer on a particular source ledger, this method finds the best "next-hop" route that should
@@ -24,7 +29,10 @@ public interface PaymentRouter<R extends Route> {
    *                                payment or message (this address may or may not be locally accessible in the routing
    *                                table).
    */
-  Optional<R> findBestNexHop(InterledgerAddress finalDestinationAddress);
+  public Optional<Route> findBestNexHop(final InterledgerAddress finalDestinationAddress) {
+    InterledgerAddress.requireNotAddressPrefix(finalDestinationAddress);
+    return this.routingTable.findNextHopRoutes(finalDestinationAddress).stream().findFirst();
+  }
 
   /**
    * Given an incoming transfer on a particular source ledger, this method finds the best "next-hop" route that should
@@ -38,8 +46,13 @@ public interface PaymentRouter<R extends Route> {
    *                                payment or message (this address may or may not be locally accessible in the routing
    *                                table).
    * @param sourceLedgerPrefix      An {@link InterledgerAddress} prefix that indicates the ILP node that received the
-   *                                payment being routed. This value is used to optionally restrict the set of available
-   *                                routes that can be used to service a next-hop payment or message.
+   *                                payment being routed. This value is used to optionally restrict the set of
+   *                                available
    */
-  Optional<R> findBestNexHop(InterledgerAddress finalDestinationAddress, InterledgerAddress sourceLedgerPrefix);
+  @Override
+  public Optional<Route> findBestNexHop(InterledgerAddress finalDestinationAddress, InterledgerAddress sourceLedgerPrefix) {
+    InterledgerAddress.requireNotAddressPrefix(finalDestinationAddress);
+    InterledgerAddress.requireAddressPrefix(sourceLedgerPrefix);
+    return this.routingTable.findNextHopRoutes(finalDestinationAddress, sourceLedgerPrefix).stream().findFirst();
+  }
 }

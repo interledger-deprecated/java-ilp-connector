@@ -7,26 +7,36 @@
 [codecov-image]: https://codecov.io/gh/interledger/java-ilp-connector/branch/master/graph/badge.svg
 [codecov-url]: https://codecov.io/gh/interledger/java-ilp-connector
 
+A Java foundation for an Interledger Connector, patterned off of the Javascript 
+Connector [ilp-connector](https://github.com/interledgerjs/ilp-connector).
 
-Java implementation of the foundations for an Interledger Connector, patterned off of the Javascript Connector [ilp-connector](https://github.com/interledgerjs/ilp-connector).
-
+* v0.2.0-SNAPSHOT Initial commit of Routing interfaces.
 * v0.1.0-SNAPSHOT Initial commit of interfaces and abstract class to construct a Java Connector.
  
 ## TODO
 
-* Quoting interfaces and abstractions.
-* Routing interfaces and abstractions.
-* Unit Tests
+- [x] Routing interfaces and abstractions.
+- [] Database-backed routing table.
+- [] Quoting interfaces and abstractions.
+- [] Unit Tests
+- [] Transition to hyperledger quilt project.
+- [ ] Update gitter and other badges...
+
 * The Issues List on [on Github](https://github.com/interledger/java-ilp-connector/issues).
 
 ## Architecture
-This project forms the basis for an Interledger Connector, but it is _not_ itself a complete Connector implementation. Instead, this project forms the basis
-for how to organize a Connector in Java, including configuration, startup, ledger communication, routing, and quoting.
+This project is the basis for an Interledger Connector, but it is _not_ itself a complete Connector implementation. 
+Instead, this project provides interfaces and abstract implementations that illustrate one way to organize a 
+Connector in Java, including configuration, startup, ledger communication, routing, and quoting.
 
 ### ILP Plugin Architecture
 This project relies on an ILP Plugin architecture where plugins can be developed and installed into this Connector. The primary example of such a plugin is the 
 [Ledger Plugin](https://github.com/interledger/java-ilp-plugin/blob/master/src/main/java/org/interledger/plugin/lpi/LedgerPlugin.java) defined in the [java-ilp-plugin](https://github.com/interledger/java-ilp-plugin) project. Implementations of LedgerPlugin are 
-intended to be run inside of the Connector's runtime, allowing a Connector to interact with any type of ledger implementation (i.e., XRP Ledger, Bitcoin, Ether, FiveBells, etc) 
+intended to be run inside of the Connector's runtime, allowing a Connector to interact with any type of ledger implementation 
+(i.e., [XRP Ledger](https://ripple.com/build/), Bitcoin, Ether, 
+[FiveBells](https://github.com/interledgerjs/five-bells-ledger), 
+[Chain Sequence](https://seq.com/), 
+etc) 
 using a standard interface. 
 
 The following diagram provides a high-level view of this arrangement:
@@ -45,7 +55,7 @@ The following diagram provides a high-level view of this arrangement:
      │     │                  │                 │     │
      │     ▽                  ▽                 ▽     │
      │  ┌─────┐            ┌─────┐           ┌─────┐  │
-     └──│LPI1 │            │LPI2 │           │LPI3 │──┘
+     └──│LPI-1│            │LPI-2│           │LPI- │──┘
         └─────┘            └─────┘           └─────┘
            △                  △                 △
            │                  │                 │
@@ -90,19 +100,16 @@ $ mvn checkstyle:checkstyle
 ```
 
 ### Step 3: Extend
-This project is meant to be extended with your own implementation. There are two concrete implementations of a Connector 
-for example purposes only.
+This project is meant to be extended with your own implementation. The following is a list of open-source 
+implementations of an Interledger Connector, built upon this project:
+ 
+ * [TBD]()
 
 ## Contributors
 
 Any contribution is very much appreciated! 
 
 [![gitter][gitter-image]][gitter-url]
-
-## Existing Implementations
-The following are concrete implementations of a Connector in Java:
-
-* TBD
 
 ## License
 This code is released under the Apache 2.0 License. Please see [LICENSE](LICENSE) for the full text.

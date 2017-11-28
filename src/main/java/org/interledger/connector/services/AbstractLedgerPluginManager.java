@@ -77,7 +77,7 @@ public abstract class AbstractLedgerPluginManager implements LedgerPluginManager
   @Override
   public Optional<LedgerPlugin> getLedgerPlugin(final InterledgerAddress ledgerPrefix) {
     Objects.requireNonNull(ledgerPrefix);
-    InterledgerAddress.requireLedgerPrefix(ledgerPrefix);
+    InterledgerAddress.requireAddressPrefix(ledgerPrefix);
 
     return Optional.ofNullable(ledgerPluginMap.get(ledgerPrefix));
   }

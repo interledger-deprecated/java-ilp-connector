@@ -1,14 +1,17 @@
 package org.interledger.connector.routing;
 
-import org.interledger.InterledgerAddress;
+import java.math.BigInteger;
 
 import org.immutables.value.Value;
 
-import java.math.BigInteger;
+import org.interledger.InterledgerAddress;
 
 /**
  * Represents a "next hop" for purposes of Interledger Routing.
+ *
+ * @deprecated Is this classe used?
  */
+@Deprecated
 @Value.Immutable
 public interface InterledgerHop {
 

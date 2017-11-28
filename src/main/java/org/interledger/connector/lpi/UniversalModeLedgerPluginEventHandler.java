@@ -1,7 +1,10 @@
 package org.interledger.connector.lpi;
 
+import org.interledger.connector.config.ConnectorConfig;
+import org.interledger.connector.config.ConnectorConfigurationService;
 import org.interledger.connector.repository.TransferCorrelation;
 import org.interledger.connector.routing.PaymentRouter;
+import org.interledger.connector.fx.FxEngine;
 import org.interledger.connector.services.LedgerPluginManager;
 import org.interledger.cryptoconditions.Fulfillment;
 import org.interledger.plugin.lpi.LedgerPlugin;
@@ -26,16 +29,21 @@ import java.util.Objects;
  * @see "https://github.com/interledger/rfcs/blob/master/0001-interledger-architecture/0001-interledger-architecture.md"
  * @see "https://github.com/interledgerjs/ilp-connector"
  */
-public class UniversalModeLedgerPluginEventHandler extends
-  AbstractLedgerPluginEventHandler implements LedgerPluginEventHandler {
+public class UniversalModeLedgerPluginEventHandler extends AbstractLedgerPluginEventHandler<ConnectorConfig>
+    implements LedgerPluginEventHandler {
 
   private final Logger logger = LoggerFactory.getLogger(this.getClass());
 
   public UniversalModeLedgerPluginEventHandler(
-    final String deterministicIdSecret, final LedgerPluginManager ledgerPluginManager,
-    final PaymentRouter paymentRouter
+      final String deterministicIdSecret,
+      final ConnectorConfigurationService<ConnectorConfig> connectorConfigurationService,
+      final LedgerPluginManager ledgerPluginManager,
+      final PaymentRouter paymentRouter,
+      final FxEngine fxEngine
   ) {
-    super(deterministicIdSecret, ledgerPluginManager, paymentRouter);
+    super(
+        deterministicIdSecret, connectorConfigurationService, ledgerPluginManager, paymentRouter, fxEngine
+    );
   }
 
   @Override
@@ -83,43 +91,43 @@ public class UniversalModeLedgerPluginEventHandler extends
     final Fulfillment executionFulfillment = event.getFulfillment();
     if (logger.isDebugEnabled()) {
       logger.debug(
-        "Received notification about executed destination transfer with TransferId: {} on Ledger: {}",
-        executedDestinationTransfer.getTransferId(),
-        executedDestinationTransfer.getLedgerPrefix());
+          "Received notification about executed destination transfer with TransferId: {} on Ledger: {}",
+          executedDestinationTransfer.getTransferId(),
+          executedDestinationTransfer.getLedgerPrefix());
     }
 
     final TransferCorrelation transferCorrelation = this.getLedgerPluginManager()
-      .getTransferCorrelationRepository()
-      .findByDestinationTransferId(executedDestinationTransfer.getTransferId())
-      .orElseThrow(() -> new RuntimeException(
-        String.format(
-          "Unable to fulfill source transfer for supplied destination transfer due to missing "
-            + "TransferCorrelation subprotocol info! DestinationTransfer: %s;",
-          executedDestinationTransfer))
-      );
+        .getTransferCorrelationRepository()
+        .findByDestinationTransferId(executedDestinationTransfer.getTransferId())
+        .orElseThrow(() -> new RuntimeException(
+            String.format(
+                "Unable to fulfill source transfer for supplied destination transfer due to missing "
+                    + "TransferCorrelation subprotocol info! DestinationTransfer: %s;",
+                executedDestinationTransfer))
+        );
 
     final Transfer sourceTransfer = transferCorrelation.getSourceTransfer();
 
     // If the destination transfer was executed, the connector should try to execute the source transfer to get paid.
     if (logger.isDebugEnabled()) {
       logger.debug(
-        "Requesting fulfillment of source transfer: {} (fulfillment: {}", sourceTransfer,
-        executionFulfillment
+          "Requesting fulfillment of source transfer: {} (fulfillment: {}", sourceTransfer,
+          executionFulfillment
       );
     }
 
     final LedgerPlugin sourceLedgerPlugin = this.getLedgerPluginManager()
-      .getLedgerPluginSafe(sourceTransfer.getTransferId(), sourceTransfer.getLedgerPrefix());
+        .getLedgerPluginSafe(sourceTransfer.getTransferId(), sourceTransfer.getLedgerPrefix());
 
     // TODO: Account for retries?
 
     try {
       sourceLedgerPlugin
-        .fulfillCondition(sourceTransfer.getTransferId(), executionFulfillment);
+          .fulfillCondition(sourceTransfer.getTransferId(), executionFulfillment);
     } catch (Exception e) {
       logger.error(
-        "Attempted to execute source transfer but it was unsuccessful; we have not been fully re-paid! "
-          + "SourceTransfer: {}, fulfillment: {}", sourceTransfer, executionFulfillment
+          "Attempted to execute source transfer but it was unsuccessful; we have not been fully re-paid! "
+              + "SourceTransfer: {}, fulfillment: {}", sourceTransfer, executionFulfillment
       );
       throw e;
     }
